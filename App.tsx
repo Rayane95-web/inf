@@ -7,6 +7,8 @@ import Layout from './components/Layout';
 import GradeInput from './components/GradeInput';
 import AdBanner from './components/AdBanner';
 import InfoTooltip from './components/InfoTooltip';
+// Dev-only ad debug UI
+import AdTester from './components/AdTester';
 
 const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -552,6 +554,13 @@ const App: React.FC = () => {
            </div>
          )}
       </div>
+
+      {/* Dev-only Ad Tester (visible only in non-production builds) */}
+      {process.env.NODE_ENV !== 'production' && (
+        <div className="fixed bottom-6 left-6 z-50">
+          <AdTester />
+        </div>
+      )}
     </Layout>
   );
 };
