@@ -8,53 +8,54 @@ import { LevelType, Branch } from './types';
  */
 
 const PRIMARY_SUBJECTS_1_4 = [
-  { id: 'arabic', name: 'اللغة العربية', coefficient: 1, notesCount: 4 },
-  { id: 'french', name: 'اللغة الفرنسية', coefficient: 1, notesCount: 4 },
-  { id: 'math', name: 'الرياضيات', coefficient: 1, notesCount: 4 },
-  { id: 'islamic', name: 'التربية الإسلامية', coefficient: 1, notesCount: 3 },
-  { id: 'science', name: 'النشاط العلمي', coefficient: 1, notesCount: 2 },
-  { id: 'art', name: 'التربية الفنية', coefficient: 1, notesCount: 2 },
-  { id: 'sport', name: 'التربية البدنية', coefficient: 1, notesCount: 1 },
+  { id: 'arabic', name: 'اللغة العربية', coefficient: 1, notesCount: 5  },
+  { id: 'french', name: 'اللغة الفرنسية', coefficient: 1, notesCount: 5 },
+  { id: 'math', name: 'الرياضيات', coefficient: 1, notesCount: 5 },
+  { id: 'islamic', name: 'التربية الإسلامية', coefficient: 1, notesCount: 5 },
+  { id: 'science', name: 'النشاط العلمي', coefficient: 1, notesCount: 5 },
+  { id: 'art', name: 'التربية الفنية', coefficient: 1, notesCount: 5 },
+  { id: 'sport', name: 'التربية البدنية', coefficient: 1, notesCount: 5 },
 ];
 
 const PRIMARY_SUBJECTS_5_6_CA = [
-  { id: 'arabic', name: 'اللغة العربية', coefficient: 1, notesCount: 4 },
-  { id: 'french', name: 'اللغة الفرنسية', coefficient: 1, notesCount: 4 },
-  { id: 'math', name: 'الرياضيات', coefficient: 1, notesCount: 4 },
-  { id: 'islamic', name: 'التربية الإسلامية', coefficient: 1, notesCount: 3 },
-  { id: 'social', name: 'الاجتماعيات', coefficient: 1, notesCount: 3 },
-  { id: 'science', name: 'النشاط العلمي', coefficient: 1, notesCount: 2 },
-  { id: 'art', name: 'التربية الفنية', coefficient: 1, notesCount: 2 },
-  { id: 'sport', name: 'التربية البدنية', coefficient: 1, notesCount: 1 },
+  { id: 'arabic', name: 'اللغة العربية', coefficient: 1, notesCount: 5 },
+  { id: 'french', name: 'اللغة الفرنسية', coefficient: 1, notesCount: 5 },
+  { id: 'math', name: 'الرياضيات', coefficient: 1, notesCount: 5 },
+  { id: 'islamic', name: 'التربية الإسلامية', coefficient: 1, notesCount: 5 },
+  { id: 'social', name: 'الاجتماعيات', coefficient: 1, notesCount: 5 },
+  { id: 'science', name: 'النشاط العلمي', coefficient: 1, notesCount: 5 },
+  { id: 'art', name: 'التربية الفنية', coefficient: 1, notesCount: 5 },
+  { id: 'sport', name: 'التربية البدنية', coefficient: 1, notesCount: 5 },
 ];
 
 const MIDDLE_SCHOOL_CA = [
-  { id: 'math', name: 'الرياضيات', coefficient: 5, notesCount: 4 },
-  { id: 'french', name: 'اللغة الفرنسية', coefficient: 5, notesCount: 4 },
-  { id: 'arabic', name: 'اللغة العربية', coefficient: 5, notesCount: 4 },
-  { id: 'phys', name: 'الفيزياء والكيمياء', coefficient: 2, notesCount: 3 },
-  { id: 'svt', name: 'علوم الحياة والأرض', coefficient: 3, notesCount: 3 },
-  { id: 'social', name: 'الاجتماعيات', coefficient: 3, notesCount: 3 },
-  { id: 'islamic', name: 'التربية الإسلامية', coefficient: 2, notesCount: 3 },
-  { id: 'sport', name: 'التربية البدنية', coefficient: 2, notesCount: 1 },
-  { id: 'info', name: 'المعلوميات', coefficient: 2, notesCount: 2 },
-  { id: 'art', name: 'التربية التشكيلية', coefficient: 2, notesCount: 2 },
+  { id: 'math', name: 'الرياضيات', coefficient: 5, notesCount: 5 },
+  { id: 'french', name: 'اللغة الفرنسية', coefficient: 5, notesCount: 5 },
+  { id: 'arabic', name: 'اللغة العربية', coefficient: 5, notesCount: 5 },
+  { id: 'phys', name: 'الفيزياء والكيمياء', coefficient: 2, notesCount: 5 },
+  { id: 'svt', name: 'علوم الحياة والأرض', coefficient: 3, notesCount: 5 },
+  { id: 'social', name: 'الاجتماعيات', coefficient: 3, notesCount: 5 },
+  { id: 'islamic', name: 'التربية الإسلامية', coefficient: 2, notesCount: 5 },
+  { id: 'sport', name: 'التربية البدنية', coefficient: 2, notesCount: 5 },
+  { id: 'info', name: 'المعلوميات', coefficient: 2, notesCount: 5 },
+  { id: 'art', name: 'التربية التشكيلية', coefficient: 2, notesCount: 5 },
 ];
 
 export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
   [LevelType.PRIMARY_1]: [{ id: 'p1', name: 'المستوى الأول', subjects: PRIMARY_SUBJECTS_1_4 }],
   [LevelType.PRIMARY_2]: [{ id: 'p2', name: 'المستوى الثاني', subjects: PRIMARY_SUBJECTS_1_4 }],
   [LevelType.PRIMARY_3]: [{ id: 'p3', name: 'المستوى الثالث', subjects: PRIMARY_SUBJECTS_1_4 }],
-  [LevelType.PRIMARY_4]: [{ id: 'p4', name: 'المستوى الرابع', subjects: PRIMARY_SUBJECTS_1_4 }],
-  [LevelType.PRIMARY_5]: [{ id: 'p5', name: 'المستوى الخامس', subjects: PRIMARY_SUBJECTS_5_6_CA }],
-  [LevelType.PRIMARY_6]: [
+  [LevelType.PRIMARY_4]: [{ id: 'p4', name: 'لمستوى الرابع', subjects: PRIMARY_SUBJECTS_1_4 }],
+  [LevelType.PRIMARY_5]: [{ id: 'p5', name: 'لمستوى الخامس', subjects: PRIMARY_SUBJECTS_5_6_CA }],
+  [LevelType.PRIMARY_6]: [{ id: 'p6', name:  'لمستوى السادس', subjects: PRIMARY_SUBJECTS_5_6_CA }],
     {
       id: 'p6-regional',
       name: 'الامتحان الإقليمي (الشهادة)',
       subjects: [
-        { id: 'arabic_islamic', name: 'اللغة العربية والتربية الإسلامية', coefficient: 3, notesCount: 1 },
-        { id: 'math', name: 'الرياضيات', coefficient: 2, notesCount: 1 },
-        { id: 'french', name: 'اللغة الفرنسية', coefficient: 2, notesCount: 1 },
+        { id: 'arabic_islamic', name: 'التربية الإسلامية', coefficient: 1, notesCount: 1 },
+        { id: 'math', name: 'الرياضيات', coefficient: 1, notesCount: 1 },
+        { id: 'french', name: 'اللغة الفرنسية', coefficient: 1, notesCount: 1 },
+        { id: 'arabic', name: 'للغة العربية', coefficient: 1, notesCount:1 },
       ]
     },
     { id: 'p6-ca', name: 'المراقبة المستمرة', subjects: PRIMARY_SUBJECTS_5_6_CA }
