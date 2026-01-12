@@ -1,293 +1,172 @@
 
-import { LevelType, Branch } from './types';
+import { LevelType, Branch, Subject } from './types';
 
 /**
- * Official Moroccan Education Coefficients & Subjects Database
- * Accurate for all divisions based on Ministry of Education standards.
+ * Moroccan Education Database - Comprehensive Version
+ * Includes coefficients for Regional, National, and Continuous Assessment (CA).
  */
 
-const PRIMARY_SUBJECTS_1_4 = [
-  { id: 'arabic', name: '📖 اللغة العربية', coefficient: 1, notesCount: 5 },
-  { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 1, notesCount: 5 },
-  { id: 'math', name: '🔢 الرياضيات', coefficient: 1, notesCount: 5 },
-  { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 1, notesCount: 5 },
-  { id: 'science', name: '🧪 النشاط العلمي', coefficient: 1, notesCount: 5 },
-  { id: 'art', name: '🎨 التربية الفنية', coefficient: 1, notesCount: 5 },
-  { id: 'music', name: '🎵 التربية الموسيقية', coefficient: 1, notesCount: 5 },
-  { id: 'sport', name: '🏃 التربية البدنية', coefficient: 1, notesCount: 5 },
+const PRIMARY_CA = [
+  { id: 'ar', name: '📖 اللغة العربية', coefficient: 1, notesCount: 5 },
+  { id: 'fr', name: '🇫🇷 اللغة الفرنسية', coefficient: 1, notesCount: 5 },
+  { id: 'ma', name: '🔢 الرياضيات', coefficient: 1, notesCount: 5 },
+  { id: 'is', name: '🕌 التربية الإسلامية', coefficient: 1, notesCount: 5 },
+  { id: 'sc', name: '🧪 النشاط العلمي', coefficient: 1, notesCount: 5 },
+  { id: 'hi', name: '🌍 الاجتماعيات', coefficient: 1, notesCount: 5 },
+  { id: 'ar_art', name: '🎨 التربية الفنية', coefficient: 1, notesCount: 5 },
+  { id: 'pe', name: '🏃 التربية البدنية', coefficient: 1, notesCount: 5 },
 ];
 
-const PRIMARY_SUBJECTS_5_6_CA = [
-  { id: 'arabic', name: '📖 اللغة العربية', coefficient: 1, notesCount: 5 },
-  { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 1, notesCount: 5 },
-  { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 1, notesCount: 5 },
-  { id: 'math', name: '🔢 الرياضيات', coefficient: 1, notesCount: 5 },
-  { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 1, notesCount: 5 },
-  { id: 'social', name: '🌍 الاجتماعيات', coefficient: 1, notesCount: 5 },
-  { id: 'science', name: '🧪 النشاط العلمي', coefficient: 1, notesCount: 5 },
-  { id: 'art', name: '🎨 التربية الفنية', coefficient: 1, notesCount: 5 },
-  { id: 'music', name: '🎵 التربية الموسيقية', coefficient: 1, notesCount: 5 },
-  { id: 'sport', name: '🏃 التربية البدنية', coefficient: 1, notesCount: 5 },
-];
-
-const MIDDLE_SCHOOL_CA = [
-  { id: 'math', name: '🔢 الرياضيات', coefficient: 5, notesCount: 5 },
-  { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 5, notesCount: 5 },
-  { id: 'arabic', name: '📖 اللغة العربية', coefficient: 5, notesCount: 5 },
-  { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 2, notesCount: 5 },
-  { id: 'phys', name: '⚡ الفيزياء والكيمياء', coefficient: 2, notesCount: 5 },
+const MIDDLE_CA = [
+  { id: 'ma', name: '🔢 الرياضيات', coefficient: 5, notesCount: 5 },
+  { id: 'fr', name: '🇫🇷 اللغة الفرنسية', coefficient: 5, notesCount: 5 },
+  { id: 'ar', name: '📖 اللغة العربية', coefficient: 5, notesCount: 5 },
+  { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2, notesCount: 5 },
+  { id: 'ph', name: '⚡ الفيزياء والكيمياء', coefficient: 2, notesCount: 5 },
   { id: 'svt', name: '🌱 علوم الحياة والأرض', coefficient: 3, notesCount: 5 },
-  { id: 'social', name: '🌍 الاجتماعيات', coefficient: 3, notesCount: 5 },
-  { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 2, notesCount: 5 },
-  { id: 'sport', name: '🏃 التربية البدنية', coefficient: 2, notesCount: 5 },
-  { id: 'info', name: '💻 المعلوميات', coefficient: 2, notesCount: 5 },
-  { id: 'art', name: '🎨 التربية التشكيلية', coefficient: 2, notesCount: 5 },
-  { id: 'music', name: '🎵 التربية الموسيقية', coefficient: 2, notesCount: 5 },
+  { id: 'so', name: '🌍 الاجتماعيات', coefficient: 3, notesCount: 5 },
+  { id: 'is', name: '🕌 الإسلامية', coefficient: 2, notesCount: 5 },
+  { id: 'pe', name: '🏃 البدنية', coefficient: 2, notesCount: 5 },
+  { id: 'it', name: '💻 المعلوميات', coefficient: 2, notesCount: 5 },
+  { id: 'te', name: '🛠️ التكنولوجيا', coefficient: 2, notesCount: 5 },
 ];
 
 export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
-  [LevelType.PRIMARY_1]: [{ id: 'p1', name: '👶 المستوى الأول', subjects: PRIMARY_SUBJECTS_1_4 }],
-  [LevelType.PRIMARY_2]: [{ id: 'p2', name: '👦 المستوى الثاني', subjects: PRIMARY_SUBJECTS_1_4 }],
-  [LevelType.PRIMARY_3]: [{ id: 'p3', name: '👧 المستوى الثالث', subjects: PRIMARY_SUBJECTS_1_4 }],
-  [LevelType.PRIMARY_4]: [{ id: 'p4', name: '📚 المستوى الرابع', subjects: PRIMARY_SUBJECTS_1_4 }],
-  [LevelType.PRIMARY_5]: [{ id: 'p5', name: '🏫 المستوى الخامس', subjects: PRIMARY_SUBJECTS_5_6_CA }],
+  [LevelType.PRIMARY_1]: [{ id: 'p1', name: 'المستوى الأول', subjects: PRIMARY_CA }],
+  [LevelType.PRIMARY_2]: [{ id: 'p2', name: 'المستوى الثاني', subjects: PRIMARY_CA }],
+  [LevelType.PRIMARY_3]: [{ id: 'p3', name: 'المستوى الثالث', subjects: PRIMARY_CA }],
+  [LevelType.PRIMARY_4]: [{ id: 'p4', name: 'المستوى الرابع', subjects: PRIMARY_CA }],
+  [LevelType.PRIMARY_5]: [{ id: 'p5', name: 'المستوى الخامس', subjects: PRIMARY_CA }],
   [LevelType.PRIMARY_6]: [
-    {
-      id: 'p6-regional',
-      name: '📝 الامتحان الإقليمي',
-      subjects: [
-        { id: 'arabic_islamic', name: '📜 العربية والإسلامية', coefficient: 3, notesCount: 5 },
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 2, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 2, notesCount: 5 },
-      ]
-    },
-    { id: 'p6-ca', name: '📅 المراقبة المستمرة', subjects: PRIMARY_SUBJECTS_5_6_CA }
+    { id: 'p6_reg', name: '📝 الامتحان الإقليمي', subjects: [
+      { id: 'ar_is', name: '📜 العربية والإسلامية', coefficient: 3, notesCount: 5 },
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 2, notesCount: 5 },
+      { id: 'fr', name: '🇫🇷 الفرنسية', coefficient: 2, notesCount: 5 },
+    ]},
+    { id: 'p6_ca', name: '📅 المراقبة المستمرة', subjects: PRIMARY_CA }
   ],
-  [LevelType.MIDDLE_1]: [{ id: 'mid1', name: '🎒 الأولى إعدادي', subjects: MIDDLE_SCHOOL_CA }],
-  [LevelType.MIDDLE_2]: [{ id: 'mid2', name: '📐 الثانية إعدادي', subjects: MIDDLE_SCHOOL_CA }],
+  [LevelType.MIDDLE_1]: [{ id: 'm1', name: 'الأولى إعدادي', subjects: MIDDLE_CA }],
+  [LevelType.MIDDLE_2]: [{ id: 'm2', name: 'الثانية إعدادي', subjects: MIDDLE_CA }],
   [LevelType.MIDDLE_3]: [
-    {
-      id: 'mid3-regional',
-      name: '🏛️ الامتحان الجهوي',
-      subjects: [
-        { id: 'arabic', name: '📖 اللغة العربية', coefficient: 3, notesCount: 5 },
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 3, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 3, notesCount: 5 },
-        { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 1, notesCount: 5 },
-        { id: 'social', name: '🌍 الاجتماعيات', coefficient: 1, notesCount: 5 },
-        { id: 'phys', name: '⚡ الفيزياء والكيمياء', coefficient: 1, notesCount: 5 },
-        { id: 'svt', name: '🌱 علوم الحياة والأرض', coefficient: 1, notesCount: 5 },
-      ]
-    },
-    { id: 'mid3-ca', name: '📅 المراقبة المستمرة', subjects: MIDDLE_SCHOOL_CA }
+    { id: 'm3_reg', name: '🏛️ الامتحان الجهوي', subjects: [
+      { id: 'ar', name: '📖 اللغة العربية', coefficient: 3, notesCount: 5 },
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 3, notesCount: 5 },
+      { id: 'fr', name: '🇫🇷 الفرنسية', coefficient: 3, notesCount: 5 },
+      { id: 'is', name: '🕌 الإسلامية', coefficient: 1, notesCount: 5 },
+      { id: 'so', name: '🌍 الاجتماعيات', coefficient: 1, notesCount: 5 },
+      { id: 'ph', name: '⚡ الفيزياء', coefficient: 1, notesCount: 5 },
+      { id: 'svt', name: '🌱 علوم الحياة', coefficient: 1, notesCount: 5 },
+    ]},
+    { id: 'm3_ca', name: '📅 المراقبة المستمرة', subjects: MIDDLE_CA }
   ],
   [LevelType.COMMON_CORE]: [
-    {
-      id: 'cc-sc',
-      name: '🧪 جذع مشترك علمي',
-      subjects: [
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 4, notesCount: 5 },
-        { id: 'phys', name: '⚡ الفيزياء والكيمياء', coefficient: 4, notesCount: 5 },
-        { id: 'svt', name: '🌱 علوم الحياة والأرض', coefficient: 4, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 3, notesCount: 5 },
-        { id: 'arabic', name: '📖 اللغة العربية', coefficient: 2, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 2, notesCount: 5 },
-        { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 2, notesCount: 5 },
-        { id: 'history_geo', name: '🌍 التاريخ والجغرافيا', coefficient: 2, notesCount: 5 },
-        { id: 'philo', name: '🧠 الفلسفة', coefficient: 2, notesCount: 5 },
-        { id: 'info', name: '💻 المعلوميات', coefficient: 2, notesCount: 5 },
-        { id: 'sport', name: '🏃 التربية البدنية', coefficient: 2, notesCount: 5 },
-      ]
-    },
-    {
-      id: 'cc-let',
-      name: '✒️ جذع مشترك آداب',
-      subjects: [
-        { id: 'arabic', name: '📖 اللغة العربية', coefficient: 5, notesCount: 5 },
-        { id: 'history_geo', name: '🌍 التاريخ والجغرافيا', coefficient: 4, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 4, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 3, notesCount: 5 },
-        { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 2, notesCount: 5 },
-        { id: 'philo', name: '🧠 الفلسفة', coefficient: 2, notesCount: 5 },
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 2, notesCount: 5 },
-        { id: 'svt', name: '🌱 علوم الحياة والأرض', coefficient: 2, notesCount: 5 },
-        { id: 'sport', name: '🏃 التربية البدنية', coefficient: 2, notesCount: 5 },
-      ]
-    },
-    {
-      id: 'cc-tech',
-      name: '⚙️ جذع مشترك تكنولوجي',
-      subjects: [
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 4, notesCount: 5 },
-        { id: 'phys', name: '⚡ الفيزياء والكيمياء', coefficient: 4, notesCount: 5 },
-        { id: 'tech', name: '🛠️ علوم المهندس', coefficient: 4, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 3, notesCount: 5 },
-        { id: 'arabic', name: '📖 اللغة العربية', coefficient: 2, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 2, notesCount: 5 },
-        { id: 'info', name: '💻 المعلوميات', coefficient: 2, notesCount: 5 },
-      ]
-    }
+    { id: 'cc_sc', name: '🧪 ج.م علمي', subjects: [
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 4 },
+      { id: 'ph', name: '⚡ الفيزياء', coefficient: 4 },
+      { id: 'svt', name: '🌱 علوم الحياة', coefficient: 4 },
+      { id: 'fr', name: '🇫🇷 الفرنسية', coefficient: 3 },
+      { id: 'ar', name: '📖 العربية', coefficient: 2 },
+      { id: 'is', name: '🕌 الإسلامية', coefficient: 2 },
+      { id: 'hi_ge', name: '🌍 الاجتماعيات', coefficient: 2 },
+      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
+      { id: 'it', name: '💻 المعلوميات', coefficient: 2 },
+      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+    ]},
+    { id: 'cc_let', name: '✒️ ج.م آداب', subjects: [
+      { id: 'ar', name: '📖 العربية', coefficient: 5 },
+      { id: 'hi_ge', name: '🌍 الاجتماعيات', coefficient: 4 },
+      { id: 'fr', name: '🇫🇷 الفرنسية', coefficient: 4 },
+      { id: 'is', name: '🕌 الإسلامية', coefficient: 2 },
+      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 2 },
+      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+    ]}
   ],
   [LevelType.FIRST_BAC]: [
-    {
-      id: '1bac-sc-ex-ca',
-      name: '🧪 علوم تجريبية ورياضية (مراقبة)',
-      subjects: [
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 7, notesCount: 5 },
-        { id: 'phys', name: '⚡ الفيزياء والكيمياء', coefficient: 7, notesCount: 5 },
-        { id: 'svt', name: '🌱 علوم الحياة والأرض', coefficient: 5, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 4, notesCount: 5 },
-        { id: 'arabic', name: '📖 اللغة العربية', coefficient: 2, notesCount: 5 },
-        { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 2, notesCount: 5 },
-        { id: 'history_geo', name: '🌍 التاريخ والجغرافيا', coefficient: 2, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 2, notesCount: 5 },
-        { id: 'philo', name: '🧠 الفلسفة', coefficient: 2, notesCount: 5 },
-        { id: 'sport', name: '🏃 التربية البدنية', coefficient: 2, notesCount: 5 },
-        { id: 'info', name: '💻 المعلوميات', coefficient: 2, notesCount: 5 },
-      ]
-    },
-    {
-      id: '1bac-sc-reg',
-      name: '🏛️ علوم (الامتحان الجهوي)',
-      subjects: [
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 4, notesCount: 5 },
-        { id: 'arabic', name: '📖 اللغة العربية', coefficient: 2, notesCount: 5 },
-        { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 2, notesCount: 5 },
-        { id: 'history_geo', name: '🌍 التاريخ والجغرافيا', coefficient: 2, notesCount: 5 },
-      ]
-    },
-    {
-      id: '1bac-let-ca',
-      name: '✒️ آداب وعلوم إنسانية (مراقبة)',
-      subjects: [
-        { id: 'arabic', name: '📖 اللغة العربية', coefficient: 5, notesCount: 5 },
-        { id: 'social', name: '🌍 الاجتماعيات', coefficient: 4, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 4, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 4, notesCount: 5 },
-        { id: 'philo', name: '🧠 الفلسفة', coefficient: 2, notesCount: 5 },
-        { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 2, notesCount: 5 },
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 2, notesCount: 5 },
-        { id: 'science', name: '🧪 العلوم', coefficient: 2, notesCount: 5 },
-        { id: 'sport', name: '🏃 التربية البدنية', coefficient: 2, notesCount: 5 },
-      ]
-    },
-    {
-      id: '1bac-eco-ca',
-      name: '📊 علوم اقتصادية وتدبير (مراقبة)',
-      subjects: [
-        { id: 'eco', name: '📊 الاقتصاد', coefficient: 6, notesCount: 5 },
-        { id: 'accounting', name: '📑 المحاسبة', coefficient: 4, notesCount: 5 },
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 4, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 4, notesCount: 5 },
-        { id: 'arabic', name: '📖 اللغة العربية', coefficient: 2, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 2, notesCount: 5 },
-        { id: 'philo', name: '🧠 الفلسفة', coefficient: 2, notesCount: 5 },
-        { id: 'islamic', name: '🕌 التربية الإسلامية', coefficient: 2, notesCount: 5 },
-        { id: 'sport', name: '🏃 التربية البدنية', coefficient: 2, notesCount: 5 },
-      ]
-    }
+    { id: '1bac_sc_ca', name: '🧪 العلوم (مراقبة)', subjects: [
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 7 },
+      { id: 'ph', name: '⚡ الفيزياء', coefficient: 7 },
+      { id: 'svt', name: '🌱 علوم الحياة', coefficient: 5 },
+      { id: 'fr', name: '🇫🇷 الفرنسية', coefficient: 4 },
+      { id: 'ar', name: '📖 العربية', coefficient: 2 },
+      { id: 'is', name: '🕌 الإسلامية', coefficient: 2 },
+      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
+      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
+      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+      { id: 'it', name: '💻 المعلوميات', coefficient: 2 },
+    ]},
+    { id: '1bac_sc_reg', name: '🏛️ العلوم (جهوي)', subjects: [
+      { id: 'fr', name: '🇫🇷 الفرنسية', coefficient: 4 },
+      { id: 'ar', name: '📖 العربية', coefficient: 2 },
+      { id: 'is', name: '🕌 الإسلامية', coefficient: 2 },
+      { id: 'hi_ge', name: '🌍 الاجتماعيات', coefficient: 2 },
+    ]},
+    { id: '1bac_let_ca', name: '✒️ آداب (مراقبة)', subjects: [
+      { id: 'ar', name: '📖 العربية', coefficient: 5 },
+      { id: 'hi_ge', name: '🌍 الاجتماعيات', coefficient: 4 },
+      { id: 'fr', name: '🇫🇷 الفرنسية', coefficient: 4 },
+      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 4 },
+      { id: 'is', name: '🕌 الإسلامية', coefficient: 2 },
+      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 2 },
+      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+    ]}
   ],
   [LevelType.SECOND_BAC]: [
-    {
-      id: '2bac-pc',
-      name: '⚡ مسلك العلوم الفيزيائية',
-      subjects: [
-        { id: 'phys', name: '⚡ الفيزياء والكيمياء', coefficient: 7, notesCount: 5 },
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 7, notesCount: 5 },
-        { id: 'svt', name: '🌱 علوم الحياة والأرض', coefficient: 5, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 2, notesCount: 5 },
-        { id: 'philo', name: '🧠 الفلسفة', coefficient: 2, notesCount: 5 },
-        { id: 'arabic', name: '📖 العربية (مراقبة)', coefficient: 2, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 الفرنسية (مراقبة)', coefficient: 4, notesCount: 5 },
-        { id: 'islamic', name: '🕌 الإسلامية (مراقبة)', coefficient: 2, notesCount: 5 },
-        { id: 'history_geo', name: '🌍 الاجتماعيات (مراقبة)', coefficient: 2, notesCount: 5 },
-        { id: 'sport', name: '🏃 البدنية', coefficient: 2, notesCount: 5 },
-      ]
-    },
-    {
-      id: '2bac-svt',
-      name: '🌱 مسلك علوم حياة وأرض',
-      subjects: [
-        { id: 'svt', name: '🌱 علوم الحياة والأرض', coefficient: 7, notesCount: 5 },
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 7, notesCount: 5 },
-        { id: 'phys', name: '⚡ الفيزياء والكيمياء', coefficient: 5, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 2, notesCount: 5 },
-        { id: 'philo', name: '🧠 الفلسفة', coefficient: 2, notesCount: 5 },
-        { id: 'arabic', name: '📖 العربية (مراقبة)', coefficient: 2, notesCount: 5 },
-        { id: 'sport', name: '🏃 البدنية', coefficient: 2, notesCount: 5 },
-      ]
-    },
-    {
-      id: '2bac-sm-a',
-      name: '📐 مسلك العلوم الرياضية (أ)',
-      subjects: [
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 9, notesCount: 5 },
-        { id: 'phys', name: '⚡ الفيزياء والكيمياء', coefficient: 7, notesCount: 5 },
-        { id: 'svt', name: '🌱 علوم الحياة والأرض', coefficient: 3, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 2, notesCount: 5 },
-        { id: 'philo', name: '🧠 الفلسفة', coefficient: 2, notesCount: 5 },
-        { id: 'arabic', name: '📖 العربية (مراقبة)', coefficient: 2, notesCount: 5 },
-        { id: 'sport', name: '🏃 البدنية', coefficient: 2, notesCount: 5 },
-      ]
-    },
-    {
-      id: '2bac-eco',
-      name: '💰 مسلك العلوم الاقتصادية',
-      subjects: [
-        { id: 'eco_gen', name: '📊 الاقتصاد العام', coefficient: 6, notesCount: 5 },
-        { id: 'eco_org', name: '📈 تنظيم المقاولات', coefficient: 3, notesCount: 5 },
-        { id: 'accounting', name: '📑 المحاسبة', coefficient: 4, notesCount: 5 },
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 4, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 الإنجليزية', coefficient: 2, notesCount: 5 },
-        { id: 'philo', name: '🧠 الفلسفة', coefficient: 2, notesCount: 5 },
-      ]
-    }
+    { id: '2bac_pc', name: '⚡ ع. فيزيائية', subjects: [
+      { id: 'ph', name: '⚡ الفيزياء', coefficient: 7 },
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 7 },
+      { id: 'svt', name: '🌱 علوم الحياة', coefficient: 5 },
+      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
+      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
+      { id: 'ar_ca', name: '📖 العربية (م)', coefficient: 2 },
+      { id: 'fr_ca', name: '🇫🇷 الفرنسية (م)', coefficient: 4 },
+      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+    ]},
+    { id: '2bac_svt', name: '🌱 ع. حياة وأرض', subjects: [
+      { id: 'svt', name: '🌱 علوم الحياة', coefficient: 7 },
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 7 },
+      { id: 'ph', name: '⚡ الفيزياء', coefficient: 5 },
+      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
+      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
+      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+    ]},
+    { id: '2bac_sma', name: '📐 ع. رياضية (أ)', subjects: [
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 9 },
+      { id: 'ph', name: '⚡ الفيزياء', coefficient: 7 },
+      { id: 'svt', name: '🌱 علوم الحياة', coefficient: 3 },
+      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
+      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
+      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+    ]},
+    { id: '2bac_eco', name: '💰 ع. اقتصادية', subjects: [
+      { id: 'eco_gen', name: '📊 الاقتصاد العام', coefficient: 6 },
+      { id: 'eco_org', name: '📈 تنظيم المقاولات', coefficient: 3 },
+      { id: 'acc', name: '📑 المحاسبة', coefficient: 4 },
+      { id: 'ma', name: '🔢 الرياضيات', coefficient: 4 },
+      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
+      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
+    ]}
   ],
   [LevelType.AUTHENTIC]: [
-    {
-      id: 'auth-mid-3',
-      name: '🕌 الثالثة إعدادي أصيل',
-      subjects: [
-        { id: 'arabic', name: '📖 اللغة العربية', coefficient: 5, notesCount: 5 },
-        { id: 'sharia', name: '📜 العلوم الشرعية', coefficient: 5, notesCount: 5 },
-        { id: 'french', name: '🇫🇷 اللغة الفرنسية', coefficient: 4, notesCount: 5 },
-        { id: 'math', name: '🔢 الرياضيات', coefficient: 4, notesCount: 5 },
-        { id: 'english', name: '🇬🇧 اللغة الإنجليزية', coefficient: 2, notesCount: 5 },
-      ]
-    }
+    { id: 'auth_sharia', name: '📜 العلوم الشرعية', subjects: [
+      { id: 'fiqh', name: '📗 الفقه والأصول', coefficient: 6 },
+      { id: 'tafsir', name: '📙 التفسير والحديث', coefficient: 5 },
+      { id: 'ar', name: '📖 العربية', coefficient: 5 },
+      { id: 'hi_ge', name: '🌍 الاجتماعيات', coefficient: 2 },
+      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
+    ]}
   ],
   [LevelType.GENERAL]: [
-    {
-      id: 'bac-final',
-      name: '🎓 المعدل العام للباك',
-      subjects: [
-        { id: 'nat', name: '🏆 الامتحان الوطني', coefficient: 2, notesCount: 5 },
-        { id: 'reg', name: '🏛️ الامتحان الجهوي', coefficient: 1, notesCount: 5 },
-        { id: 'ca', name: '📅 المراقبة المستمرة', coefficient: 1, notesCount: 5 },
-      ]
-    }
+    { id: 'bac_total', name: '🎓 المعدل العام', subjects: [
+      { id: 'nat', name: '🏆 الوطني', coefficient: 2 },
+      { id: 'reg', name: '🏛️ الجهوي', coefficient: 1 },
+      { id: 'ca', name: '📅 المراقبة', coefficient: 1 },
+    ]}
   ],
   [LevelType.CUSTOM]: [
-    {
-      id: 'custom-free',
-      name: '🧮 حساب مخصص',
-      subjects: [
-        { id: 's1', name: 'المادة 1', coefficient: 1, notesCount: 5 },
-        { id: 's2', name: 'المادة 2', coefficient: 1, notesCount: 5 },
-      ]
-    }
+    { id: 'c_free', name: '🧮 حساب مخصص', subjects: Array.from({ length: 5 }, (_, i) => ({ id: `s${i}`, name: `المادة ${i+1}`, coefficient: 1 }))}
   ],
   [LevelType.SPECIAL]: [],
-  [LevelType.CUSTOM_ENTRY]: [
-    {
-      id: 'manual-entry',
-      name: '✍️ إدخال يدوي',
-      subjects: Array.from({ length: 8 }, (_, i) => ({
-        id: `manual_${i + 1}`,
-        name: `المادة ${i + 1}`,
-        coefficient: 1,
-        notesCount: 5
-      }))
-    }
-  ]
+  [LevelType.CUSTOM_ENTRY]: []
 };
