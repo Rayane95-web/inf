@@ -21,15 +21,27 @@ const MIDDLE_CA = [
   { id: 'ma', name: '🔢 الرياضيات', coefficient: 5, notesCount: 5 },
   { id: 'fr', name: '🇫🇷 اللغة الفرنسية', coefficient: 5, notesCount: 5 },
   { id: 'ar', name: '📖 اللغة العربية', coefficient: 5, notesCount: 5 },
-  { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2, notesCount: 5 },
+  { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 1, notesCount: 5 },
   { id: 'ph', name: '⚡ الفيزياء والكيمياء', coefficient: 2, notesCount: 5 },
   { id: 'svt', name: '🌱 علوم الحياة والأرض', coefficient: 3, notesCount: 5 },
   { id: 'so', name: '🌍 الاجتماعيات', coefficient: 3, notesCount: 5 },
   { id: 'is', name: '🕌 الإسلامية', coefficient: 2, notesCount: 5 },
   { id: 'pe', name: '🏃 البدنية', coefficient: 2, notesCount: 5 },
-  { id: 'it', name: '💻 المعلوميات', coefficient: 2, notesCount: 5 },
-  { id: 'te', name: '🛠️ التكنولوجيا', coefficient: 2, notesCount: 5 },
+  { id: 'it', name: '💻 المعلوميات', coefficient: 1, notesCount: 5 },
+  { id: 'te', name: '🛠️ التكنولوجيا', coefficient: 1, notesCount: 5 },
+  { id: 'mu', name: '🎵 التربية الموسيقية', coefficient: 1, notesCount: 5 },
 ];
+
+const MIDDLE_2_CA = [
+  ...MIDDLE_CA,
+  { id: 'fa', name: '🏠 التربية الأسرية', coefficient: 2, notesCount: 5 },
+];
+
+// For 3rd year Middle School CA, all coefficients are 1
+const MIDDLE_3_CA_ONLY_1 = MIDDLE_CA.map(subject => ({
+  ...subject,
+  coefficient: 1
+}));
 
 export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
   [LevelType.PRIMARY_1]: [{ id: 'p1', name: 'المستوى الأول', subjects: PRIMARY_CA }],
@@ -46,7 +58,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
     { id: 'p6_ca', name: '📅 المراقبة المستمرة', subjects: PRIMARY_CA }
   ],
   [LevelType.MIDDLE_1]: [{ id: 'm1', name: 'الأولى إعدادي', subjects: MIDDLE_CA }],
-  [LevelType.MIDDLE_2]: [{ id: 'm2', name: 'الثانية إعدادي', subjects: MIDDLE_CA }],
+  [LevelType.MIDDLE_2]: [{ id: 'm2', name: 'الثانية إعدادي', subjects: MIDDLE_2_CA }],
   [LevelType.MIDDLE_3]: [
     { id: 'm3_reg', name: '🏛️ الامتحان الجهوي', subjects: [
       { id: 'ar', name: '📖 اللغة العربية', coefficient: 3, notesCount: 5 },
@@ -57,7 +69,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'ph', name: '⚡ الفيزياء', coefficient: 1, notesCount: 5 },
       { id: 'svt', name: '🌱 علوم الحياة', coefficient: 1, notesCount: 5 },
     ]},
-    { id: 'm3_ca', name: '📅 المراقبة المستمرة', subjects: MIDDLE_CA }
+    { id: 'm3_ca', name: '📅 المراقبة المستمرة', subjects: MIDDLE_3_CA_ONLY_1 }
   ],
   [LevelType.COMMON_CORE]: [
     { id: 'cc_sc', name: '🧪 ج.م علمي', subjects: [
@@ -71,6 +83,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
       { id: 'it', name: '💻 المعلوميات', coefficient: 2 },
       { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
     ]},
     { id: 'cc_let', name: '✒️ ج.م آداب', subjects: [
       { id: 'ar', name: '📖 العربية', coefficient: 5 },
@@ -80,6 +93,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
       { id: 'ma', name: '🔢 الرياضيات', coefficient: 2 },
       { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
     ]}
   ],
   [LevelType.FIRST_BAC]: [
@@ -94,6 +108,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
       { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
       { id: 'it', name: '💻 المعلوميات', coefficient: 2 },
+      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
     ]},
     { id: '1bac_sc_reg', name: '🏛️ العلوم (جهوي)', subjects: [
       { id: 'fr', name: '🇫🇷 الفرنسية', coefficient: 4 },
@@ -110,6 +125,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
       { id: 'ma', name: '🔢 الرياضيات', coefficient: 2 },
       { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
     ]}
   ],
   [LevelType.SECOND_BAC]: [
@@ -122,6 +138,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'ar_ca', name: '📖 العربية (م)', coefficient: 2 },
       { id: 'fr_ca', name: '🇫🇷 الفرنسية (م)', coefficient: 4 },
       { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
     ]},
     { id: '2bac_svt', name: '🌱 ع. حياة وأرض', subjects: [
       { id: 'svt', name: '🌱 علوم الحياة', coefficient: 7 },
@@ -130,6 +147,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
       { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
     ]},
     { id: '2bac_sma', name: '📐 ع. رياضية (أ)', subjects: [
       { id: 'ma', name: '🔢 الرياضيات', coefficient: 9 },
@@ -138,6 +156,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
       { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
+      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
     ]},
     { id: '2bac_eco', name: '💰 ع. اقتصادية', subjects: [
       { id: 'eco_gen', name: '📊 الاقتصاد العام', coefficient: 6 },
@@ -146,6 +165,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'ma', name: '🔢 الرياضيات', coefficient: 4 },
       { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
+      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
     ]}
   ],
   [LevelType.AUTHENTIC]: [
