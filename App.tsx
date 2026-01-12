@@ -6,17 +6,16 @@ import Layout from './components/Layout';
 import SplashScreen from './components/SplashScreen';
 import GradeInput from './components/GradeInput';
 import AdBanner from './components/AdBanner';
-import InfoTooltip from './components/InfoTooltip';
+import EducationalContent from './components/EducationalContent';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isCalculating, setIsCalculating] = useState(false);
   const [showResult, setShowResult] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [calculationResult, setCalculationResult] = useState<{ result: string, progress: number } | null>(null);
 
   const [state, setState] = useState<AppState>(() => {
-    const saved = localStorage.getItem('moroccan_calc_state_v1');
+    const saved = localStorage.getItem('moroccan_calc_state_v2');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -46,7 +45,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('moroccan_calc_state_v1', JSON.stringify(state));
+    localStorage.setItem('moroccan_calc_state_v2', JSON.stringify(state));
   }, [state]);
 
   const toggleDarkMode = () => {
@@ -97,12 +96,9 @@ const App: React.FC = () => {
     setTimeout(() => {
       let totalWeightedGrade = 0;
       let totalCoefficients = 0;
-      let totalInputsNeeded = 0;
       let totalInputsFilled = 0;
 
       currentBranch.subjects.forEach(subject => {
-        const count = 5;
-        totalInputsNeeded += count;
         const grades = state.grades[subject.id] || [];
         const numericGrades = grades.map(g => parseFloat(g)).filter(n => !isNaN(n));
         totalInputsFilled += numericGrades.length;
@@ -115,16 +111,15 @@ const App: React.FC = () => {
       });
 
       const result = totalCoefficients > 0 ? totalWeightedGrade / totalCoefficients : 0;
-      const progress = totalInputsNeeded > 0 ? (totalInputsFilled / totalInputsNeeded) * 100 : 0;
       
       setCalculationResult({
         result: result.toFixed(2),
-        progress
+        progress: 100
       });
       setIsCalculating(false);
       setShowResult(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 3000);
+    }, 2000);
   };
 
   if (loading) return <SplashScreen />;
@@ -168,14 +163,14 @@ const App: React.FC = () => {
           <section className="bg-white dark:bg-gray-800 rounded-[2.5rem] p-6 shadow-xl border border-gray-100 dark:border-gray-700 animate-in zoom-in-95">
             <h2 className="text-xl font-black mb-6 flex items-center gap-3">
               <span className="w-2 h-8 bg-blue-500 rounded-full"></span>
-              📚 اختر المستوى
+              📚 اختر المستوى الدراسي
             </h2>
             <div className="flex flex-wrap gap-3">
               {(Object.keys(LEVEL_BRANCHES) as LevelType[]).map((level) => {
                 const isMatch = (state.stage === EducationStage.PRIMARY && level.includes('ابتدائي')) ||
                                 (state.stage === EducationStage.MIDDLE && level.includes('إعدادي')) ||
                                 (state.stage === EducationStage.HIGH && (level.includes('باك') || level.includes('جذع مشترك'))) ||
-                                (state.stage === EducationStage.TOOLS && (level === LevelType.CUSTOM || level === LevelType.CUSTOM_ENTRY || level === LevelType.GENERAL || level === LevelType.SPECIAL || level === LevelType.AUTHENTIC));
+                                (state.stage === EducationStage.TOOLS && (level === LevelType.CUSTOM || level === LevelType.GENERAL || level === LevelType.AUTHENTIC));
                 if (!isMatch) return null;
                 return (
                   <button
@@ -193,22 +188,22 @@ const App: React.FC = () => {
           </section>
         )}
 
-        {/* Branch / Division Selection */}
+        {/* Branch Selection */}
         {state.level && LEVEL_BRANCHES[state.level].length > 1 && (
           <section className="bg-white dark:bg-gray-800 rounded-[2.5rem] p-6 shadow-xl border border-gray-100 dark:border-gray-700 animate-in zoom-in-95">
              <h2 className="text-xl font-black mb-6 flex items-center gap-3">
               <span className="w-2 h-8 bg-amber-500 rounded-full"></span>
-              {state.stage === EducationStage.HIGH ? '🧬 اختر الشعبة (Division)' : '📑 اختر المسلك / النوع'}
+              📑 اختر المسلك / نوع الامتحان
             </h2>
-            <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {LEVEL_BRANCHES[state.level].map((branch) => (
                 <button
                   key={branch.id}
                   onClick={() => setBranch(branch.id)}
-                  className={`px-5 py-3 rounded-xl font-bold transition-all active:scale-95 ${
+                  className={`p-4 rounded-2xl font-black text-right transition-all active:scale-[0.98] border-2 ${
                     state.branchId === branch.id 
-                      ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' 
-                      : 'bg-gray-50 dark:bg-gray-900 text-gray-600 dark:text-gray-400 border border-gray-100 dark:border-gray-800'
+                      ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' 
+                      : 'bg-gray-50 dark:bg-gray-900 text-gray-600 dark:text-gray-400 border-gray-100 dark:border-gray-800'
                   }`}
                 >
                   {branch.name}
@@ -226,15 +221,12 @@ const App: React.FC = () => {
               <div className="absolute inset-0 border-8 border-white border-t-transparent rounded-full animate-spin"></div>
               <div className="absolute inset-0 flex items-center justify-center text-4xl">⏳</div>
             </div>
-            <h2 className="text-3xl font-black mb-4">جاري تدقيق النقط... ✨</h2>
-            <p className="max-w-xs font-bold opacity-80 mb-8">نحن نقوم الآن بحساب معدلك بدقة بناءً على معاملات وزارة التربية الوطنية 🇲🇦</p>
-            <div className="w-full max-w-sm">
-              <AdBanner label="إعلان - يرجى الانتظار" type="banner" />
-            </div>
+            <h2 className="text-3xl font-black mb-4">جاري معالجة البيانات...</h2>
+            <p className="max-w-xs font-bold opacity-80 mb-8 tracking-wide">نحسب معدلك الآن بدقة وفق معايير وزارة التربية الوطنية والتعليم الأولي والرياضة.</p>
           </div>
         )}
 
-        {currentBranch && (
+        {currentBranch ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
               {currentBranch.subjects.map((subject) => (
@@ -262,44 +254,42 @@ const App: React.FC = () => {
               
               <button
                 onClick={handleCalculate}
-                className="w-full py-6 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-[2.5rem] font-black text-2xl shadow-2xl shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-4 group"
+                className="w-full py-6 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-[2.5rem] font-black text-2xl shadow-2xl shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-4"
               >
-                <span>🚀 احسب النتيجة الآن</span>
-                <span className="group-hover:rotate-12 transition-transform">🧮</span>
+                <span>🚀 احسب المعدل</span>
+                <span className="text-3xl">🧮</span>
               </button>
             </div>
 
-            {/* Result Sidebar */}
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
                 {showResult && calculationResult ? (
                   <div className="bg-emerald-600 rounded-[2.5rem] p-8 text-white shadow-2xl animate-in zoom-in duration-500 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-4 opacity-20 text-6xl">🏆</div>
-                    <h3 className="text-xl font-black mb-2 opacity-90">معدلك النهائي ✨</h3>
-                    <div className="text-7xl font-black tracking-tighter mb-4 flex items-baseline gap-2 animate-bounce">
+                    <h3 className="text-xl font-black mb-2 opacity-90">النتيجة النهائية ✨</h3>
+                    <div className="text-7xl font-black tracking-tighter mb-4 flex items-baseline gap-2">
                       {calculationResult.result}
                       <span className="text-xl opacity-60">/20</span>
                     </div>
                     <div className="p-4 bg-white/20 rounded-2xl text-sm font-bold">
-                      {parseFloat(calculationResult.result) >= 10 ? "✅ تهانينا! لقد نجحت" : "⚠️ تحتاج لبذل مجهود أكبر"}
+                      {parseFloat(calculationResult.result) >= 10 ? "✅ أحسنت! نتيجة جيدة" : "⚠️ استمر في العمل، يمكنك التحسن"}
                     </div>
-                    <button 
-                      onClick={() => setShowResult(false)}
-                      className="mt-6 w-full py-3 bg-black/20 hover:bg-black/30 rounded-xl font-black text-sm"
-                    >
-                      تعديل النقط 🔄
+                    <button onClick={() => setShowResult(false)} className="mt-6 w-full py-3 bg-black/20 hover:bg-black/30 rounded-xl font-black text-sm">
+                      تعديل النقاط 🔄
                     </button>
                   </div>
                 ) : (
                   <div className="bg-gray-100 dark:bg-gray-800 rounded-[2.5rem] p-8 text-center border-4 border-dashed border-gray-200 dark:border-gray-700 text-gray-400">
                     <div className="text-5xl mb-4 opacity-30">🤔</div>
-                    <p className="font-black text-lg">أدخل نقطك ثم اضغط على زر الحساب لرؤية نتيجتك</p>
+                    <p className="font-black text-lg leading-relaxed">أدخل نقاطك في المواد أعلاه ليتم حساب المعدل تلقائياً</p>
                   </div>
                 )}
                 <AdBanner type="banner" />
               </div>
             </div>
           </div>
+        ) : (
+          <EducationalContent />
         )}
       </div>
     </Layout>
