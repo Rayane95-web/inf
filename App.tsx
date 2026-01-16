@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { EducationStage, LevelType, AppState } from './types';
 import { LEVEL_BRANCHES } from './constants';
 import Layout from './components/Layout';
@@ -125,11 +126,13 @@ const App: React.FC = () => {
   if (loading) return <SplashScreen />;
 
   return (
-    <Layout 
-      isDarkMode={state.isDarkMode} 
-      toggleDarkMode={toggleDarkMode}
-      onOpenSettings={() => setIsSettingsOpen(true)}
-    >
+    <>
+      <Analytics />
+      <Layout 
+        isDarkMode={state.isDarkMode} 
+        toggleDarkMode={toggleDarkMode}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+      >
       <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700" dir="rtl">
         
         {/* Stage Selection */}
@@ -293,6 +296,7 @@ const App: React.FC = () => {
         )}
       </div>
     </Layout>
+    </>
   );
 };
 
