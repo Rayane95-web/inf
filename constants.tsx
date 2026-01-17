@@ -3,7 +3,6 @@ import { LevelType, Branch, Subject } from './types';
 
 /**
  * Moroccan Education Database - Comprehensive Version
- * Includes coefficients for Regional, National, and Continuous Assessment (CA).
  */
 
 const PRIMARY_CA = [
@@ -94,6 +93,7 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'is', name: '🕌 الإسلامية', coefficient: 2 },
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
       { id: 'ma', name: '🔢 الرياضيات', coefficient: 2 },
+      { id: 'it', name: '💻 المعلوميات', coefficient: 2 },
       { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
       { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
     ]}
@@ -108,15 +108,9 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'is', name: '🕌 الإسلامية', coefficient: 2 },
       { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
-      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
       { id: 'it', name: '💻 المعلوميات', coefficient: 2 },
+      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
       { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
-    ]},
-    { id: '1bac_sc_reg', name: '🏛️ العلوم (جهوي)', subjects: [
-      { id: 'fr', name: '🇫🇷 الفرنسية', coefficient: 4 },
-      { id: 'ar', name: '📖 العربية', coefficient: 2 },
-      { id: 'is', name: '🕌 الإسلامية', coefficient: 2 },
-      { id: 'hi_ge', name: '🌍 الاجتماعيات', coefficient: 2 },
     ]},
     { id: '1bac_let_ca', name: '✒️ آداب (مراقبة)', subjects: [
       { id: 'ar', name: '📖 العربية', coefficient: 5 },
@@ -150,33 +144,6 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
       { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
       { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
       { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
-    ]},
-    { id: '2bac_sma', name: '📐 ع. رياضية (أ)', subjects: [
-      { id: 'ma', name: '🔢 الرياضيات', coefficient: 9 },
-      { id: 'ph', name: '⚡ الفيزياء', coefficient: 7 },
-      { id: 'svt', name: '🌱 علوم الحياة', coefficient: 3 },
-      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
-      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
-      { id: 'pe', name: '🏃 البدنية', coefficient: 2 },
-      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
-    ]},
-    { id: '2bac_eco', name: '💰 ع. اقتصادية', subjects: [
-      { id: 'eco_gen', name: '📊 الاقتصاد العام', coefficient: 6 },
-      { id: 'eco_org', name: '📈 تنظيم المقاولات', coefficient: 3 },
-      { id: 'acc', name: '📑 المحاسبة', coefficient: 4 },
-      { id: 'ma', name: '🔢 الرياضيات', coefficient: 4 },
-      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
-      { id: 'philo', name: '🧠 الفلسفة', coefficient: 2 },
-      { id: 'beh', name: '🤝 المواظبة والسلوك', coefficient: 1 },
-    ]}
-  ],
-  [LevelType.AUTHENTIC]: [
-    { id: 'auth_sharia', name: '📜 العلوم الشرعية', subjects: [
-      { id: 'fiqh', name: '📗 الفقه والأصول', coefficient: 6 },
-      { id: 'tafsir', name: '📙 التفسير والحديث', coefficient: 5 },
-      { id: 'ar', name: '📖 العربية', coefficient: 5 },
-      { id: 'hi_ge', name: '🌍 الاجتماعيات', coefficient: 2 },
-      { id: 'en', name: '🇬🇧 الإنجليزية', coefficient: 2 },
     ]}
   ],
   [LevelType.GENERAL]: [
@@ -190,5 +157,6 @@ export const LEVEL_BRANCHES: Record<LevelType, Branch[]> = {
     { id: 'c_free', name: '🧮 حساب مخصص', subjects: Array.from({ length: 5 }, (_, i) => ({ id: `s${i}`, name: `المادة ${i+1}`, coefficient: 1 }))}
   ],
   [LevelType.SPECIAL]: [],
-  [LevelType.CUSTOM_ENTRY]: []
+  [LevelType.CUSTOM_ENTRY]: [],
+  [LevelType.AUTHENTIC]: []
 };
