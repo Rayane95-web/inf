@@ -1,14 +1,13 @@
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head> 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3272418713415911"
-     crossorigin="anonymous"></script>
-    <script src="https://pl28494756.effectivegatecpm.com/68/99/42/689942a78e71856a3e6de69fe3a0eb89.js"></script>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>حاسبة المعدلات – المغرب</title>
     <meta name="theme-color" content="#10b981">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
@@ -40,8 +39,10 @@
     <style>
       body {
         font-family: 'Cairo', sans-serif;
+        -webkit-tap-highlight-color: transparent;
+        overscroll-behavior-y: contain;
       }
-      /* Custom scrollbar for better aesthetics */
+      /* Custom scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
       }
@@ -51,9 +52,6 @@
       ::-webkit-scrollbar-thumb {
         background: #888;
         border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #555;
       }
     </style>
   <script type="importmap">
@@ -65,45 +63,15 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
     <script>
-  atOptions = {
-    'key' : '101886db29c713ec886c7ce26135c081',
-    'format' : 'iframe',
-    'height' : 60,
-    'width' : 468,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/101886db29c713ec886c7ce26135c081/invoke.js"></script>
-    <script async="async" data-cfasync="false" src="https://deridenightingalepartial.com/2146ce97c9cd621bf751a3015781fe7c/invoke.js"></script>
-<div id="container-2146ce97c9cd621bf751a3015781fe7c"></div>
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDdVjAAldl0h817EkxPRIOGMy0QJo51bhU",
-    authDomain: "mo3adalk.firebaseapp.com",
-    projectId: "mo3adalk",
-    storageBucket: "mo3adalk.firebasestorage.app",
-    messagingSenderId: "46440359858",
-    appId: "1:46440359858:web:fa392c66d0e5952da726ab",
-    measurementId: "G-22P4Q7CZ66"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-</body>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js');
+        });
+      }
+    </script>
+  </body>
 </html>
